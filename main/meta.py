@@ -7,7 +7,6 @@ from torchvision import transforms
 import os
 
 path = os.path.dirname(os.getcwd())
-print(f'{path}')
 
 batch_size = 100
 
