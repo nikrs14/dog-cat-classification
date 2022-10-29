@@ -1,5 +1,5 @@
 """
-Two variables that are
+Variables that are
 used on multiple files
 """
 
