@@ -35,7 +35,7 @@ def main():
         precision = weighted_output[0][0] * 100 if predicted[0] == 0 else weighted_output[0][1] * 100
     
     imgplot = plt.imshow(plot_image)
-    plt.xlabel(f'{specie} ({precision:.2f})%')
+    plt.xlabel(f'{specie} ({precision:.2f}%)', color='#50647a', fontweight='bold', fontsize='large')
     plt.show()
 
 
