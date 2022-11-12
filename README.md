@@ -8,7 +8,7 @@ Convolutional Neural Network for a species classification using PyTorch
 | --- | --- |
 | Made in | October 2022 |
 | Languages used | Python 3 |
-| Libraries used | Pytorch, cv2, numpy, pandas|
+| Libraries used | Pytorch, cv2, numpy, pandas, matplotlib|
 | Programs used | VSCode |
 
 ## How to use
