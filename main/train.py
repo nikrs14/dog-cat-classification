@@ -10,44 +10,48 @@ loss of previous models.
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
+from sys import argv
 from torch.utils.data import DataLoader
 from convnet import ConvNet
 from dataset import SpeciesDataset
-from meta import batch_size, transform, path
+from meta import batch_size, transform, path, device
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-print(f'Working on {device}.')
+def main():
+    print(f'Working on {device}.')
 
-num_epochs = 50
-learning_rate = 0.001
+    num_epochs = 20
+    learning_rate = 0.001
 
-train_set = SpeciesDataset(csv_file = path + '/dataset/data.csv', root_dir = path + '/dataset/set/', transform = transform)
-train_loader = DataLoader(train_set, batch_size = batch_size, shuffle = True)
+    train_set = SpeciesDataset(csv_file = path + '/dataset/data.csv', root_dir = path + '/dataset/set/', transform = transform)
+    train_loader = DataLoader(train_set, batch_size = batch_size, shuffle = True)
 
-model = ConvNet().to(device)
+    model = ConvNet().to(device)
 
-criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr = learning_rate)
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr = learning_rate)
 
-n_total_steps = len(train_loader)
+    n_total_steps = len(train_loader)
 
-print('\nStarting Training...\n')
+    print('\nStarting Training...\n')
 
-for epoch in range(num_epochs):
-    for i, (images, labels, names) in enumerate(train_loader):
-        images = images.to(device)
-        labels = labels.to(device)
+    for epoch in range(num_epochs):
+        for i, (images, labels) in enumerate(train_loader):
+            images = images.to(device)
+            labels = labels.to(device)
 
-        outputs = model(images)
-        loss = criterion(outputs, labels)
+            outputs = model(images)
+            loss = criterion(outputs, labels)
 
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
-        if (i + 1) % 100 == 0:
-            print(f'Epoch {epoch+1}/{num_epochs}, Step {i+1}/{n_total_steps}, Loss: {loss.item()}')
+            if (i + 1) % 100 == 0:
+                print(f'Epoch {epoch+1}/{num_epochs}, Step {i+1}/{n_total_steps}, Loss: {loss.item()}')
 
-print('\nFinished Training')
+    print('\nFinished Training')
 
-torch.save(model.state_dict(), path + '/saves/model02.pth')
+    torch.save(model.state_dict(), path + f'/saves/{argv[1]}')
+
+if __name__ == '__main__':
+    main()

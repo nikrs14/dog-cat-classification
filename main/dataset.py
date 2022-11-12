@@ -23,4 +23,4 @@ class SpeciesDataset(Dataset):
         image = cv2.imread(self.root_dir + filename)
         image = self.transform(image)
         targets = 0 if self.csv_file.values[index][1] == 'dog' else 1
-        return image, targets, filename
+        return image, targets
