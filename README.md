@@ -2,6 +2,8 @@
 ---
 Convolutional Neural Network for a species classification using PyTorch
 
+![image](screenshot.png)
+
 | | |
 | --- | --- |
 | Made in | October 2022 |
